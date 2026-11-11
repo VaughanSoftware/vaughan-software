@@ -89,7 +89,7 @@ Update `site.config.json`:
 
 **Custom domain:** point your DNS at GitHub first. Then set `url` to `https://vaughan-software.com`, `basePath` to `/`, and `customDomain` to `vaughan-software.com`; push the change and set the same domain in **Settings → Pages → Custom domain** (works with the Actions deploy).
 
-For `vaughan-software.com` managed in Cloudflare, add these DNS-only records (leave the proxy disabled / gray cloud):
+For `vaughan-software.com` managed in Cloudflare, add these DNS-only records (leave the proxy disabled / gray cloud; proxied Cloudflare records can interfere with GitHub's domain verification and HTTPS certificate setup):
 
 | Type | Name | Target |
 | --- | --- | --- |
@@ -99,7 +99,7 @@ For `vaughan-software.com` managed in Cloudflare, add these DNS-only records (le
 | A | `@` | `185.199.111.153` |
 | CNAME | `www` | `vaughansoftware.github.io` |
 
-Then set `vaughan-software.com` as the custom domain in **GitHub repository → Settings → Pages**, wait for DNS verification, and enable **Enforce HTTPS**. DNS changes can take time to propagate.
+Then set `vaughan-software.com` as the custom domain in **GitHub repository → Settings → Pages**, wait for DNS verification and the HTTPS certificate to become available, and enable **Enforce HTTPS**. DNS changes can take time to propagate.
 
 Pages use clean paths such as `/services/` and `/about/`. Existing `.html` paths redirect to their clean equivalents.
 
