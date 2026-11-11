@@ -188,10 +188,9 @@ function build() {
       const pageDir = path.join(OUT, slug);
       fs.mkdirSync(pageDir, { recursive: true });
       fs.writeFileSync(path.join(pageDir, 'index.html'), html);
-      fs.writeFileSync(
-        path.join(OUT, file),
-        `<!doctype html>\n<html lang="${escapeHtml(config.lang)}">\n<head>\n  <meta charset="utf-8">\n  <meta name="robots" content="noindex, follow">\n  <link rel="canonical" href="${escapeHtml(canonical)}">\n  <meta http-equiv="refresh" content="0;url=${escapeHtml(canonical)}">\n  <title>Page moved</title>\n</head>\n<body>\n  <p>This page has moved. <a href="${escapeHtml(canonical)}">Continue to the page</a>.</p>\n</body>\n</html>\n`
-      );
+      // GitHub Pages resolves slashless paths through the matching .html file.
+      // Serve the page there too, otherwise it cannot redirect to itself.
+      fs.writeFileSync(path.join(OUT, file), html);
     }
     if (!is404 && meta.sitemap !== 'false' && meta.robots !== 'noindex') {
       sitemap.push({ loc: canonical, lastmod: lastModified(srcFile), priority: slug === 'index' ? '1.0' : '0.8' });
