@@ -1,0 +1,63 @@
+---
+title: Hire a Freelance PHP & WordPress Developer
+breadcrumb: Contact
+type: ContactPage
+description: Get in touch with Vaughan Software, a freelance PHP, Laravel and WordPress developer in the UK and Sweden. Free, no-obligation project enquiries.
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow reveal">Contact</p>
+    <h1 class="reveal">Let's talk about <span class="gradient-text">your project.</span></h1>
+    <p class="lead reveal">Send a few details and I'll get back to you as soon as I can. No obligation, no hard sell.</p>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container contact-grid">
+    <aside class="contact-info reveal">
+      <div class="card">
+        <h2 class="h3">Email</h2>
+        <p><a class="contact-email" href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        <button class="btn btn-ghost btn-sm" type="button" data-copy="{{ site.email }}">Copy address</button>
+      </div>
+      <div class="card">
+        <h2 class="h3">Helpful to include</h2>
+        <ul class="checklist checklist-sm">
+          <li>A short description of the project</li>
+          <li>Links to any existing site</li>
+          <li>Your rough budget and timeline</li>
+        </ul>
+      </div>
+    </aside>
+
+    <form class="contact-form card reveal" data-contact-form data-email="{{ site.email }}" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="type">Project type</label>
+        <select id="type" name="type">
+          <option>New website</option>
+          <option>WordPress / WooCommerce</option>
+          <option>PHP / Laravel application</option>
+          <option>Upgrade, fix or rescue</option>
+          <option>Maintenance &amp; support</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+      </div>
+      <button class="btn btn-lg" type="submit">Send message</button>
+      <p class="form-note muted" data-form-status role="status">This opens your email app with your message ready to send.</p>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+{
+  "name": "Vaughan Software",
+  "url": "https://vaughansoftware.github.io/vaughan-software",
+  "basePath": "/vaughan-software/",
+  "email": "vaughan-software@gmail.com",
+  "description": "Freelance PHP, Laravel and WordPress developer based in the UK and Sweden, working remotely with clients worldwide. Fast, secure, maintainable websites and web apps.",
+  "lang": "en-GB",
+  "locale": "en_GB",
+  "location": "the UK and Sweden",
+  "areaServed": "Worldwide",
+  "logo": "assets/img/apple-touch-icon.png",
+  "ogImage": "assets/img/og-image.jpg",
+  "ogImageAlt": "Vaughan Software — freelance PHP, Laravel and WordPress development",
+  "googleSiteVerification": "",
+  "bingSiteVerification": "",
+  "sameAs": [],
+  "knowsAbout": ["PHP", "Laravel", "Symfony", "WordPress", "WooCommerce", "JavaScript", "TypeScript", "Node.js", "MySQL", "REST APIs", "Web performance", "Web accessibility"],
+  "services": [
+    { "name": "PHP & Laravel development", "description": "Bespoke web applications, portals and internal tools built on modern PHP." },
+    { "name": "WordPress & WooCommerce development", "description": "Custom WordPress themes, Gutenberg blocks, plugins and WooCommerce stores." },
+    { "name": "Front-end development", "description": "Responsive, accessible interfaces in HTML, CSS and JavaScript." },
+    { "name": "API development & integrations", "description": "REST APIs and integrations with payment gateways, CRMs and third-party services." },
+    { "name": "PHP upgrades & project rescue", "description": "Legacy PHP version upgrades, bug fixing, code audits and project takeovers." },
+    { "name": "Website performance, security & maintenance", "description": "Speed optimisation, Core Web Vitals, security hardening and ongoing care." }
+  ]
+}

@@ -1,0 +1,103 @@
+<!doctype html>
+<!--
+  Generates the social share image (1200x630 JPEG) and Apple touch icon (180x180).
+  Open this file in a browser, check the previews, and download each PNG into src/assets/img/.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Generate site images</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #222; color: #eee; padding: 2rem; }
+  canvas { display: block; max-width: 100%; height: auto; margin: 1rem 0; outline: 1px solid #444; }
+  a { color: #22d3ee; }
+</style>
+</head>
+<body>
+  <h1>Site images</h1>
+  <canvas id="og" width="1200" height="630"></canvas>
+  <a id="og-dl" download="og-image.jpg">Download og-image.jpg</a>
+  <canvas id="icon" width="180" height="180"></canvas>
+  <a id="icon-dl" download="apple-touch-icon.png">Download apple-touch-icon.png</a>
+
+<script>
+const SANS = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+const MONO = 'ui-monospace, Menlo, Consolas, monospace';
+const C1 = '#7c5cff', C2 = '#22d3ee';
+
+function brandGradient(ctx, x0, y0, x1, y1) {
+  const g = ctx.createLinearGradient(x0, y0, x1, y1);
+  g.addColorStop(0, C1); g.addColorStop(1, C2);
+  return g;
+}
+function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+function vMark(ctx, x, y, size) {
+  // Same "V" path as favicon.svg (designed on a 64 unit grid)
+  const s = size / 64;
+  ctx.beginPath();
+  [[17,18],[25,18],[32,38],[39,18],[47,18],[36,47],[28,47]].forEach(([px, py], i) => ctx[i ? 'lineTo' : 'moveTo'](x + px * s, y + py * s));
+  ctx.closePath(); ctx.fillStyle = '#fff'; ctx.fill();
+}
+function glow(ctx, x, y, r, color) {
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, color); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
+
+function drawOg() {
+  const ctx = document.getElementById('og').getContext('2d');
+  const W = 1200, H = 630, P = 80;
+  ctx.fillStyle = '#0b0d12'; ctx.fillRect(0, 0, W, H);
+  glow(ctx, 180, 120, 520, 'rgba(124,92,255,0.45)');
+  glow(ctx, 1150, 600, 480, 'rgba(34,211,238,0.28)');
+
+  // Faded grid
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); ctx.stroke(); }
+  ctx.restore();
+
+  // Brand
+  roundRect(ctx, P, 72, 72, 72, 18); ctx.fillStyle = brandGradient(ctx, P, 72, P + 72, 144); ctx.fill();
+  vMark(ctx, P, 72, 72);
+  ctx.textBaseline = 'middle';
+  ctx.font = `700 38px ${SANS}`; ctx.fillStyle = '#e8eaf0'; ctx.fillText('Vaughan', P + 92, 109);
+  const vw = ctx.measureText('Vaughan ').width;
+  ctx.font = `500 38px ${SANS}`; ctx.fillStyle = '#9aa3b5'; ctx.fillText('Software', P + 92 + vw, 109);
+
+  // Headline
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = `800 78px ${SANS}`;
+  ctx.fillStyle = '#e8eaf0'; ctx.fillText('Freelance PHP & WordPress', P, 330);
+  const dw = ctx.measureText('developer.').width;
+  ctx.fillStyle = brandGradient(ctx, P, 0, P + dw, 0); ctx.fillText('developer.', P, 418);
+
+  // Tags
+  ctx.font = `500 22px ${MONO}`; ctx.textBaseline = 'middle';
+  let x = P;
+  for (const t of ['PHP', 'Laravel', 'WordPress', 'JavaScript']) {
+    const w = ctx.measureText(t).width + 36;
+    roundRect(ctx, x, 518, w, 46, 23);
+    ctx.fillStyle = 'rgba(255,255,255,0.04)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.stroke();
+    ctx.fillStyle = '#e8eaf0'; ctx.fillText(t, x + 18, 542);
+    x += w + 12;
+  }
+  ctx.font = `400 26px ${SANS}`; ctx.fillStyle = '#9aa3b5'; ctx.textAlign = 'right';
+  ctx.fillText('UK & Sweden · Worldwide', W - P, 542);
+  ctx.textAlign = 'left';
+}
+
+function drawIcon() {
+  const ctx = document.getElementById('icon').getContext('2d');
+  ctx.fillStyle = brandGradient(ctx, 0, 0, 180, 180); ctx.fillRect(0, 0, 180, 180);
+  vMark(ctx, 10, 10, 160);
+}
+
+drawOg(); drawIcon();
+document.getElementById('og-dl').href = document.getElementById('og').toDataURL('image/jpeg', 0.9);
+document.getElementById('icon-dl').href = document.getElementById('icon').toDataURL('image/png');
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "vaughan-software",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vaughan Software — static website",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node serve.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

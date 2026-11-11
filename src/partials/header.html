@@ -1,0 +1,20 @@
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="{{ base }}" aria-label="{{ site.name }} home">
+      <span class="brand-mark" aria-hidden="true">V</span>
+      <span class="brand-name">Vaughan<span class="brand-accent">Software</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <span class="sr-only">Menu</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main" data-site-nav>
+      <ul>
+        <li><a href="{{ base }}" data-nav="index">Home</a></li>
+        <li><a href="{{ base }}services.html" data-nav="services">Services</a></li>
+        <li><a href="{{ base }}about.html" data-nav="about">About</a></li>
+        <li><a class="btn btn-sm" href="{{ base }}contact.html" data-nav="contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
