@@ -19,7 +19,7 @@ build.js              Static site builder (no dependencies)
 serve.js              Local dev server with auto-rebuild
 src/
   partials/           Shared HTML: layout, header, footer, cta
-  pages/              One file per page -> dist/<name>.html
+  pages/              One file per page -> dist/<name>/index.html (clean URLs)
   assets/             CSS, JS, images (copied as-is)
 tools/
   generate-images.html  Draws the share image and app icon
@@ -84,9 +84,24 @@ After launch:
 Update `site.config.json`:
 
 - `url` — your live URL (used for canonical links and the sitemap), e.g. `https://username.github.io/repo` or `https://vaughansoftware.com`.
-- `basePath` — the path the site is served from. `/` for a custom domain or `username.github.io` repo; `/repo-name/` for a project site. (Used by the 404 page and the web manifest; all other links are relative.)
+- `basePath` — the path the site is served from. `/` for a custom domain or `username.github.io` repo; `/repo-name/` for a project site.
+- `customDomain` — leave empty until your custom domain's DNS is pointed at GitHub and you are ready to enable it. The build writes the required `CNAME` file when this is set.
 
-**Custom domain:** set it in **Settings → Pages → Custom domain** (works with the Actions deploy), point your DNS at GitHub, then set `url` to the domain and `basePath` to `/`.
+**Custom domain:** point your DNS at GitHub first. Then set `url` to `https://vaughan-software.com`, `basePath` to `/`, and `customDomain` to `vaughan-software.com`; push the change and set the same domain in **Settings → Pages → Custom domain** (works with the Actions deploy).
+
+For `vaughan-software.com` managed in Cloudflare, add these DNS-only records (leave the proxy disabled / gray cloud):
+
+| Type | Name | Target |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `vaughansoftware.github.io` |
+
+Then set `vaughan-software.com` as the custom domain in **GitHub repository → Settings → Pages**, wait for DNS verification, and enable **Enforce HTTPS**. DNS changes can take time to propagate.
+
+Pages use clean paths such as `/services/` and `/about/`. Existing `.html` paths redirect to their clean equivalents.
 
 ## Other free hosts
 

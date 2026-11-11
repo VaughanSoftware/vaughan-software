@@ -2,6 +2,7 @@
   "name": "Vaughan Software",
   "url": "https://vaughansoftware.github.io/vaughan-software",
   "basePath": "/vaughan-software/",
+  "customDomain": "",
   "email": "vaughan-software@gmail.com",
   "description": "Freelance PHP, Laravel and WordPress developer based in the UK and Sweden, working remotely with clients worldwide. Fast, secure, maintainable websites and web apps.",
   "lang": "en-GB",

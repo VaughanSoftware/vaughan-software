@@ -154,7 +154,7 @@ function build() {
     const srcFile = path.join(pagesDir, file);
     const { meta, body } = parseFrontMatter(fs.readFileSync(srcFile, 'utf8'));
     const is404 = slug === '404';
-    const pagePath = slug === 'index' ? '' : `${slug}.html`;
+    const pagePath = slug === 'index' || is404 ? '' : `${slug}/`;
     const title = meta.title ? `${meta.title} — ${config.name}` : config.name;
     const description = meta.description || config.description;
     const canonical = `${siteUrl}/${pagePath}`;
@@ -168,8 +168,8 @@ function build() {
       title: escapeHtml(title),
       description: escapeHtml(description),
       slug,
-      // 404 is served from arbitrary URLs, so it needs absolute asset paths
-      base: is404 ? config.basePath : './',
+      // Pages may be served from nested directories, so use the configured root path.
+      base: config.basePath,
       canonical,
       siteUrl,
       robots: is404 || meta.robots === 'noindex' ? 'noindex, follow' : 'index, follow, max-image-preview:large',
@@ -182,7 +182,17 @@ function build() {
 
     let html = render(partials.layout, vars, partials);
     html = html.replace(new RegExp(`data-nav="${slug}"`, 'g'), `data-nav="${slug}" aria-current="page"`);
-    fs.writeFileSync(path.join(OUT, file), html);
+    if (slug === 'index' || is404) {
+      fs.writeFileSync(path.join(OUT, file), html);
+    } else {
+      const pageDir = path.join(OUT, slug);
+      fs.mkdirSync(pageDir, { recursive: true });
+      fs.writeFileSync(path.join(pageDir, 'index.html'), html);
+      fs.writeFileSync(
+        path.join(OUT, file),
+        `<!doctype html>\n<html lang="${escapeHtml(config.lang)}">\n<head>\n  <meta charset="utf-8">\n  <meta name="robots" content="noindex, follow">\n  <link rel="canonical" href="${escapeHtml(canonical)}">\n  <meta http-equiv="refresh" content="0;url=${escapeHtml(canonical)}">\n  <title>Page moved</title>\n</head>\n<body>\n  <p>This page has moved. <a href="${escapeHtml(canonical)}">Continue to the page</a>.</p>\n</body>\n</html>\n`
+      );
+    }
     if (!is404 && meta.sitemap !== 'false' && meta.robots !== 'noindex') {
       sitemap.push({ loc: canonical, lastmod: lastModified(srcFile), priority: slug === 'index' ? '1.0' : '0.8' });
     }
@@ -218,6 +228,7 @@ function build() {
   );
   fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
+  if (config.customDomain) fs.writeFileSync(path.join(OUT, 'CNAME'), `${config.customDomain}\n`);
 
   console.log(`Built ${sitemap.length} indexable pages (+404) to dist/ in ${Date.now() - started}ms`);
 }
