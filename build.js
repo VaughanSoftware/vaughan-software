@@ -154,7 +154,7 @@ function build() {
     const srcFile = path.join(pagesDir, file);
     const { meta, body } = parseFrontMatter(fs.readFileSync(srcFile, 'utf8'));
     const is404 = slug === '404';
-    const pagePath = slug === 'index' || is404 ? '' : `${slug}/`;
+    const pagePath = slug === 'index' || is404 ? '' : slug;
     const title = meta.title ? `${meta.title} — ${config.name}` : config.name;
     const description = meta.description || config.description;
     const canonical = `${siteUrl}/${pagePath}`;

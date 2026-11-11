@@ -101,7 +101,7 @@ For `vaughan-software.com` managed in Cloudflare, add these DNS-only records (le
 
 Then set `vaughan-software.com` as the custom domain in **GitHub repository → Settings → Pages**, wait for DNS verification and the HTTPS certificate to become available, and enable **Enforce HTTPS**. DNS changes can take time to propagate.
 
-Pages use clean paths such as `/services/` and `/about/`. Existing `.html` paths redirect to their clean equivalents.
+Pages use clean paths without file extensions or trailing slashes, such as `/services` and `/about`. Existing `.html` paths redirect to their clean equivalents.
 
 ## Other free hosts
 
